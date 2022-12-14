@@ -15,9 +15,9 @@ async function fetch() {
   // Use cheerio to parse the HTML page
   const $ = cheerio.load(response.data);
   // Extract the news articles from the page
-  const articles = $(".gs-c-promo-heading");
+  const articles = $("a.gs-c-promo-heading");
   // Loop through the articles and send them to the webhook
-    
+
   articles.each((i, el) => {
     const title = $(el).text();
     const url = $(el).attr("href");
