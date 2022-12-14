@@ -17,7 +17,7 @@ async function fetch() {
   // Extract the news articles from the page
   const articles = $(".gs-c-promo-heading");
   // Loop through the articles and send them to the webhook
-
+    
   articles.each((i, el) => {
     const title = $(el).text();
     const url = $(el).attr("href");
@@ -26,7 +26,7 @@ async function fetch() {
       url: `https://bbc.com${url}`,
     });
   });
-  return titleURL.slice(0, 10);
+  return titleURL.slice(0, 5);
 }
 let oldLinks = [];
 async function run() {
