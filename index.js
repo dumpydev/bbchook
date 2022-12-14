@@ -26,40 +26,23 @@ async function fetch() {
       url: `https://bbc.com${url}`,
     });
   });
-  return titleURL.slice(0,10);
+  return titleURL.slice(0, 10);
 }
 let oldLinks = [];
 l.info("starting..");
-fetch()
-  .then((urls) => {
-    console.log(urls)
-    const links = urls.map((item) => item.url);
-    console.log(links)
-    // check if there are any new links
-    const newLinks = links.filter((link) => !oldLinks.includes(link));
-    if (newLinks.length > 0) {
-      // send the new links
-      client.send(`Latest News: ${newLinks.join(" ")}`);
-      l.debug("Sent new links");
-    } else {
-      l.error("No new links");
-      return;
-    }
-    // set the old links to the new links
-    oldLinks = links;
-  })
-  .catch((err) => console.log(err));
-
-setInterval(() => {
-  l.info("Starting");
+async function run() {
   fetch()
-    .then((data) => {
-      const links = data.map((item) => item.link);
+    .then((urls) => {
+      console.log(urls);
+      const links = urls.map((item) => item.url);
+      console.log(links);
       // check if there are any new links
       const newLinks = links.filter((link) => !oldLinks.includes(link));
       if (newLinks.length > 0) {
-        // send the new links
-        client.send(`Latest News: ${newLinks.join(" ")}`);
+        client.send("Latest News: ");
+        for (let i = 0; i < newLinks.length; i++) {
+          client.send(`${newLinks[i]}`);
+        }
         l.debug("Sent new links");
       } else {
         l.error("No new links");
@@ -69,4 +52,8 @@ setInterval(() => {
       oldLinks = links;
     })
     .catch((err) => console.log(err));
+}
+
+setInterval(() => {
+  run();
 }, 900000);
