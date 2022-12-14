@@ -40,9 +40,9 @@ async function run() {
       const newLinks = links.filter((link) => !oldLinks.includes(link));
       if (newLinks.length > 0) {
         client.send("Latest News: ");
-        for (let i = 0; i < newLinks.length; i++) {
-          client.send(`${newLinks[i]}`);
-        }
+        newLinks.forEach((link) => {
+            client.send(link);
+        });
         l.debug("Sent new links");
       } else {
         l.error("No new links");
@@ -55,5 +55,5 @@ async function run() {
 }
 
 setInterval(() => {
-  run();
+    run();
 }, 900000);
