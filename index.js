@@ -29,7 +29,6 @@ async function fetch() {
   return titleURL.slice(0, 10);
 }
 let oldLinks = [];
-l.info("starting..");
 async function run() {
   fetch()
     .then((urls) => {
@@ -41,7 +40,7 @@ async function run() {
       if (newLinks.length > 0) {
         client.send("Latest News: ");
         newLinks.forEach((link) => {
-            client.send(link);
+          client.send(link);
         });
         l.debug("Sent new links");
       } else {
@@ -53,7 +52,7 @@ async function run() {
     })
     .catch((err) => console.log(err));
 }
-
+run();
 setInterval(() => {
-    run();
+  run();
 }, 900000);
